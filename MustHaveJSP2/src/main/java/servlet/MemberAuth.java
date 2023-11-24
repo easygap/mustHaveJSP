@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import membership.MemberDAO;
 import membership.MemberDTO;
 
+
 public class MemberAuth extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	MemberDAO dao;
@@ -20,7 +21,7 @@ public class MemberAuth extends HttpServlet {
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
-	public void init(ServletConfig config) throws ServletException {
+	public void init() throws ServletException {
 		// application 내장 객체 얻기
 		ServletContext application = this.getServletContext();
 		
@@ -29,6 +30,9 @@ public class MemberAuth extends HttpServlet {
 		String connectUrl = application.getInitParameter("OracleURL");
 		String oId = application.getInitParameter("OracleId");
 		String oPass = application.getInitParameter("OraclePwd");
+		
+		// DAO 생성
+		dao = new MemberDAO(driver, connectUrl, oId, oPass);
 	}
 	
 	/**
@@ -65,7 +69,4 @@ public class MemberAuth extends HttpServlet {
 	public void destroy() {
 		dao.close();
 	}
-
-	
-
 }
